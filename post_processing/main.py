@@ -26,9 +26,10 @@ plt.rc('font', **font)
 	
 filename = "../Soln_100.00000.h5"	
 
-case = 1 # 0 - Soln.dat, 1- modal energy, 2- vector plots, 3- helicity
+case = 0 # 0 - Soln.dat, 1- modal energy, 2- vector plots, 3- helicity
 
 Ra, Pr, Ta = (1.0e5, 1.0, 1.0e6)
+beta = 1.5e0
 
 def hdf5_reader(filename,dataset):
 	file_V1_read = h5py.File(filename)
@@ -52,7 +53,6 @@ x = np.linspace(0, 1 + hx, Nx + 2, endpoint=True) - hx/2
 y = np.linspace(0, 1 + hx, Ny + 2, endpoint=True) - hy/2
 z = np.linspace(0, 1 + hx, Nz + 2, endpoint=True) - hz/2
 
-beta = 1.0e-10
 x = 0.5*(1.0 - np.tanh(beta*(1.0 - 2*x))/np.tanh(beta))
 y = 0.5*(1.0 - np.tanh(beta*(1.0 - 2*y))/np.tanh(beta))
 z = 0.5*(1.0 - np.tanh(beta*(1.0 - 2*z))/np.tanh(beta))	
@@ -60,6 +60,7 @@ z = 0.5*(1.0 - np.tanh(beta*(1.0 - 2*z))/np.tanh(beta))
 # paraview format ###########
 if ( case == 0):
 	print("writing Soln.dat file")
+	print("beta=", beta)
 	f = open('Soln.dat', 'w+') 
 	f.write('VARIABLES = "X", "Y", "Z", "Vx", "Vy", "Vz", "P", "T" \n')
 	f.write("ZONE I = %d" %(Nx))
